@@ -281,6 +281,20 @@ class Workspace:
         )
         return self.get_artifact(sha256)  # type: ignore[return-value]
 
+    def list_artifacts(
+        self, *, job_id: str | None = None, kind: str | None = None, limit: int = 50
+    ) -> list[dict[str, Any]]:
+        """Artifacts newest last, optionally those of one job or one kind (for example mmcif)."""
+        where, args = [], []
+        for col, val in (("job_id", job_id), ("kind", kind)):
+            if val is not None:
+                where.append(f"{col} = ?")
+                args.append(val)
+        clause = f"WHERE {' AND '.join(where)}" if where else ""
+        return self._rows(
+            f"SELECT * FROM artifacts {clause} ORDER BY created_at, id LIMIT ?", (*args, limit)
+        )
+
     def get_artifact(self, artifact_id: str) -> dict[str, Any] | None:
         rows = self._rows("SELECT * FROM artifacts WHERE id = ?", (artifact_id,))
         return rows[0] if rows else None

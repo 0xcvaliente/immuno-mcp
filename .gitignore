@@ -16,3 +16,7 @@ build/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+
+# AlphaFold Server output: non-commercial terms, not redistributable here.
+# Recreate with scripts/fetch_reference_fixtures.py
+tests/fixtures/structure/ipsae_aurka_tpx2/

@@ -56,6 +56,16 @@ def test_artifacts_are_stored_once_by_content(ws):
     assert Path(a["path"]).read_bytes() == b"data_x\n"
 
 
+def test_artifacts_can_be_listed_by_job_and_kind(ws):
+    ws.store_bytes(b"data_a\n", kind="mmcif", suffix=".cif", job_id="j1")
+    ws.store_bytes(b"{}", kind="json", suffix=".json", job_id="j1")
+    ws.store_bytes(b"data_b\n", kind="mmcif", suffix=".cif", job_id="j2")
+    assert len(ws.list_artifacts()) == 3
+    assert {a["kind"] for a in ws.list_artifacts(job_id="j1")} == {"mmcif", "json"}
+    assert [a["job_id"] for a in ws.list_artifacts(kind="mmcif", job_id="j2")] == ["j2"]
+    assert ws.list_artifacts(job_id="nope") == []
+
+
 def test_spend_prefers_actual_over_estimate_per_job(ws):
     ws.record_spend(session_id="s1", provider="japanfold", usd=1.0, kind="estimate", job_id="j1")
     ws.record_spend(session_id="s1", provider="japanfold", usd=0.4, kind="actual", job_id="j1")
