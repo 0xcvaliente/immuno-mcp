@@ -14,7 +14,7 @@ Rules for everyone who adds code to immuno-mcp, human or agent. The foundation (
 ## Environment
 
 ```
-cd /Users/0xcvaliente/immuno-mcp
+cd <path to your clone of immuno-mcp>
 .venv/bin/python -m pytest tests/unit/<your tests> -q        # unit tests, no network
 .venv/bin/python -m pytest -m live tests/live/<your file> -q  # real network, be polite
 .venv/bin/ruff check <your files> && .venv/bin/ruff format <your files>
