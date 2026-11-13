@@ -1,0 +1,17 @@
+#Pdb;Mutation(s)_PDB;Mutation(s)_cleaned;iMutation_Location(s);Hold_out_type;Hold_out_proteins;Affinity_mut (M);Affinity_mut_parsed;Affinity_wt (M);Affinity_wt_parsed;Reference;Protein 1;Protein 2;Temperature;kon_mut (M^(-1)s^(-1));kon_mut_parsed;kon_wt (M^(-1)s^(-1));kon_wt_parsed;koff_mut (s^(-1));koff_mut_parsed;koff_wt (s^(-1));koff_wt_parsed;dH_mut (kcal mol^(-1));dH_wt (kcal mol^(-1));dS_mut (cal mol^(-1) K^(-1));dS_wt (cal mol^(-1) K^(-1));Notes;Method;SKEMPI version
+1CSE_E_I;LI45G;LI38G;COR;Pr/PI;Pr/PI;5.26E-11;5.26E-11;1.12E-12;1.12E-12;9048543;Subtilisin Carlsberg;Eglin c;294;;;;;;;;;;;;;;IASP;1
+1CSE_E_I;LI45S;LI38S;COR;Pr/PI;Pr/PI;8.33E-12;8.33E-12;1.12E-12;1.12E-12;9048543;Subtilisin Carlsberg;Eglin c;294;;;;;;;;;;;;;;IASP;1
+1SBN_E_I;RI45K;RI38K;COR;Pr/PI;Pr/PI;3.2E-11;3.2E-11;5.4E-11;5.4E-11;1992167;Subtilisin BPN;Eglin c;298(assumed);;;;;;;;;;;;;Crystal structure is one of the mutants in the paper. This mutant is taken as 'wild-type',,;IASP;1
+1IAR_A_B;EA9K;EA9K;COR;;1IAR_A_B;n.b;;1.62E-10;1.62E-10;9050834;Interleukin-4;Interleukin-4 receptor;298;;;;;;;;;;;;;;SPR;2
+1BRS_A_D;DD35A;DD35A;COR;;1BRS_A_D,1B2U_A_D,1B2S_A_D,1B3S_A_D,1X1W_A_D,1X1X_A_D;1.27E-07;1.27E-07;1.32E-10;1.32E-10;Water-mediated interaction at a protein-protein interface, Chemical Physics, Volume 307, Issues 2-3, 2004;Barnase;Barstar;298;2.14E+05;2.14E+05;8.74E+05;8.74E+05;2.73E-02;2.73E-02;1.15E-04;1.15E-04;;;;;;SPR;1
+1SBB_A_B;LB20T,VB26Y,YB91V;LB20T,VB26Y,YB91V;COR,RIM,RIM;;1SBB_A_B,1JCK_A_B;>1.5E-04;1.5E-04;1.2E-04;1.2E-04;9500785;Beta-chain of 14.3.d;Staphylococcal enterotoxin B;298;;;;;;;;;;;;;;SE;2
+1VFB_AB_C;HA30A;HA30A;RIM;AB/AG;AB/AG;8.33E-08;8.33E-08;2E-08;2E-08;8703938;IgG1-kappa D1.3 Fv;HEW Lysozyme;298;;;;;;;;;;;;;;SPR;1
+1VFB_AB_C;YA32A;YA32A;COR;AB/AG;AB/AG;1.92E-07;1.92E-07;2E-08;2E-08;8703938;IgG1-kappa D1.3 Fv;HEW Lysozyme;298;;;;;;;;;;;;;;SPR;1
+1VFB_AB_C;YB32A;YB32A;COR;AB/AG;AB/AG;4.35E-08;4.35E-08;2E-08;2E-08;8703938;IgG1-kappa D1.3 Fv;HEW Lysozyme;298;;;;;;;;;;;;;;SPR;1
+1FC2_C_D;YC133W;YC10W;COR;;1FC2_C_D,1FCC_A_C,3MZW_A_B;3E-08;3E-08;1.5E-08;1.5E-08;7716157;Protein A/Z;IgG1 Fc;298;;;;;;;;;;;;;;FL;1
+2FTL_E_I;KI15R;KI15R;COR;Pr/PI;Pr/PI;~2.2E-14;2.2E-14;5.88E-14;5.88E-14;10339415;Bovine trypsin;BPTI;295;;;;;;;;;;;;;Asp115 of trypsin is covalently bound to the adjacent residue via a beta-peptide linkage. Modified residue has been removed. Approximate value.;IASP;2
+1VFB_AB_C;YA32A,QC121A;YA32A,QC121A;COR,COR;AB/AG;AB/AG;1.82E-07;1.82E-07;1.25E-08;1.25E-08;9609690;IgG1-kappa D1.3 Fv;HEW Lysozyme;298(assumed);;;;;;;;;;;;;;SPR;1
+3HFM_HL_Y;YY20A;YY20A;COR;AB/AG;AB/AG;1.13E-07;1.13E-07;3E-11;3E-11;10338006;HyHEL-10;HEW Lysozyme;298(assumed);;;;;;;;;;;;;NB) HyHEL-10 and HyHEL-63 are very similar,,;SP;1
+4N8V_G_ABC;PG16A;PG10A;INT;;4N8V_G_ABC,2P5E_ABC_DE,2PYE_ABC_DE,2BNR_ABC_DE,2BNQ_ABC_DE,5E9D_AB_CDE,1MI5_ABC_DE;1.54E-05;1.54E-05;2.22E-05;2.22E-05;24550293;Killer cell immunoglobulin-like receptor 2DS2;HLA-A-11 plus A14 peptide;298;;;;;;;;;;;;;;SPR;2
+4I77_HL_Z;YH97F;YH100F;RIM;AB/AG;AB/AG;<1E-11;1E-11;<1E-11;1E-11;23357170;Lebrikizumab fab;Interleukin-13;298;;;;;;;;;;;;;;SPR;2
+4G0N_A_B;DA38A;DA38A;COR;;4G0N_A_B,3KUD_A_B,1LFD_A_B,1GUA_A_B,1C1Y_A_B,1K8R_A_B,1HE8_A_B,1E96_A_B;1.3E-06;1.3E-06;1.8E-08;1.8E-08;8636102;H-Ras1;Raf-RBD;;;;;;;;;;;;;;;IAFL;2
