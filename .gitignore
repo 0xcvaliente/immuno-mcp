@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+*.egg-info/
+.env
+.env.*
+!.env.example
+.DS_Store
+# Local workspace, caches and downloaded datasets never go into git.
+.immuno-mcp/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
