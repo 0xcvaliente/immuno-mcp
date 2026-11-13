@@ -1,0 +1,40 @@
+HEADER    VIRAL PROTEIN/IMMUNE SYSTEM             04-NOV-20   7KN5              
+TITLE     CRYSTAL STRUCTURE OF SARS-COV-2 RECEPTOR BINDING DOMAIN COMPLEXED WITH
+TITLE    2 NANOBODIES VHH E AND U                                               
+COMPND    MOL_ID: 1;                                                            
+COMPND   2 MOLECULE: SPIKE PROTEIN S1;                                          
+COMPND   3 CHAIN: A, B;                                                         
+COMPND   4 ENGINEERED: YES;                                                     
+COMPND   5 MOL_ID: 2;                                                           
+COMPND   6 MOLECULE: VHH E;                                                     
+COMPND   7 CHAIN: C, D;                                                         
+COMPND   8 ENGINEERED: YES;                                                     
+COMPND   9 MOL_ID: 3;                                                           
+COMPND  10 MOLECULE: VHH U;                                                     
+COMPND  11 CHAIN: E, F;                                                         
+COMPND  12 ENGINEERED: YES                                                      
+SOURCE    MOL_ID: 1;                                                            
+SOURCE   2 ORGANISM_SCIENTIFIC: SEVERE ACUTE RESPIRATORY SYNDROME CORONAVIRUS   
+SOURCE   3 2;                                                                   
+SOURCE   4 ORGANISM_COMMON: 2019-NCOV;                                          
+SOURCE   5 ORGANISM_TAXID: 2697049;                                             
+SOURCE   6 GENE: S, 2;                                                          
+SOURCE   7 EXPRESSION_SYSTEM: TRICHOPLUSIA NI;                                  
+SOURCE   8 EXPRESSION_SYSTEM_COMMON: CABBAGE LOOPER;                            
+SOURCE   9 EXPRESSION_SYSTEM_TAXID: 7111;                                       
+SOURCE  10 EXPRESSION_SYSTEM_VECTOR_TYPE: BACULOVIRUS;                          
+SOURCE  11 MOL_ID: 2;                                                           
+SOURCE  12 ORGANISM_SCIENTIFIC: VICUGNA PACOS;                                  
+SOURCE  13 ORGANISM_TAXID: 30538;                                               
+SOURCE  14 EXPRESSION_SYSTEM: ESCHERICHIA COLI;                                 
+SOURCE  15 EXPRESSION_SYSTEM_TAXID: 562;                                        
+SOURCE  16 EXPRESSION_SYSTEM_STRAIN: WK6;                                       
+SOURCE  17 EXPRESSION_SYSTEM_ATCC_NUMBER: 47078;                                
+SOURCE  18 MOL_ID: 3;                                                           
+SOURCE  19 ORGANISM_SCIENTIFIC: VICUGNA PACOS;                                  
+SOURCE  20 ORGANISM_TAXID: 30538;                                               
+SOURCE  21 EXPRESSION_SYSTEM: ESCHERICHIA COLI;                                 
+SOURCE  22 EXPRESSION_SYSTEM_TAXID: 562;                                        
+SOURCE  23 EXPRESSION_SYSTEM_STRAIN: WK6;                                       
+SOURCE  24 EXPRESSION_SYSTEM_ATCC_NUMBER: 47078                                 
+KEYWDS    SARS-COV-2, NANOBODY, SPIKE, CORONAVIRUS, COVID-19, IMMUNE SYSTEM,    

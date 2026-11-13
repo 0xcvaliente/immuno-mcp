@@ -193,6 +193,31 @@ async def test_good_responses_are_cached(make_http):
     assert other == {"n": 2} and calls["n"] == 2
 
 
+async def test_cache_hits_keep_headers_but_never_cookies(make_http):
+    def handler(req: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={"ok": 1},
+            headers={"x-uniprot-release": "2026_04", "set-cookie": "session=secret"},
+        )
+
+    http = make_http(handler, cache=True)
+    _, first = await http.get_json("example", URL, ttl=60)
+    _, second = await http.get_json("example", URL, ttl=60)
+    assert not first.cached and second.cached
+    assert second.headers["x-uniprot-release"] == "2026_04"
+    assert "set-cookie" not in second.headers
+
+
+async def test_error_details_carry_the_upstream_status_and_body(make_http):
+    body = {"detail": "Input should be 'FV', 'FAB' or 'SD-H'"}
+    http = make_http(lambda r: httpx.Response(422, json=body))
+    with pytest.raises(ImmunoError) as err:
+        await http.get_json("example", URL)
+    assert err.value.details["status"] == 422 and "SD-H" in err.value.details["body"]
+    assert "details" not in err.value.to_message()  # kept out of the model-facing text
+
+
 async def test_failed_responses_are_never_cached(make_http):
     calls = {"n": 0}
 

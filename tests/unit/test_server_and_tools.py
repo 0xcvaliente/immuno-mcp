@@ -184,7 +184,8 @@ class _FakeStructures(Connector):
 
 async def test_resolve_identifier_confirms_against_a_connector(make_server, monkeypatch):
     monkeypatch.setitem(CONNECTORS, "fake_structures", _FakeStructures)
-    built = make_server()
+    # Real connectors also try to resolve; every upstream answers 404 so the test stays offline.
+    built = make_server(lambda r: httpx.Response(404, json={}))
     async with Client(built.server) as c:
         ok = await c.call_tool("resolve_identifier", {"value": "7kn5"})
         missing = await c.call_tool("resolve_identifier", {"value": "9ZZZ"})
@@ -197,7 +198,8 @@ async def test_resolve_identifier_confirms_against_a_connector(make_server, monk
 
 async def test_diagnostics_live_reports_each_connector(make_server, monkeypatch):
     monkeypatch.setitem(CONNECTORS, "fake_structures", _FakeStructures)
-    built = make_server()
+    # live=true runs every connector's health check; answer them all from a mock, not the network.
+    built = make_server(lambda r: httpx.Response(404, json={}))
     async with Client(built.server) as c:
         offline = await c.call_tool("diagnostics", {})
         live = await c.call_tool("diagnostics", {"live": True})

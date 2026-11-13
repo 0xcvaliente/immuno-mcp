@@ -1,0 +1,1 @@
+{"detail":[{"type":"enum","loc":["query","antibody_type","list[str-enum[AntibodyType]]",0],"msg":"Input should be 'FV', 'FAB', 'FAB+FC', 'FV*', 'SD-H', 'SD-L' or 'VNAR'","input":"VHH","ctx":{"expected":"'FV', 'FAB', 'FAB+FC', 'FV*', 'SD-H', 'SD-L' or 'VNAR'"}},{"type":"none_required","loc":["query","antibody_type","none"],"msg":"Input should be None","input":["VHH"]}]}

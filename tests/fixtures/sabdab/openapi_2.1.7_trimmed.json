@@ -1,0 +1,477 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "SAbDab",
+  "summary": "The Structural Antibody Database.",
+  "license": {
+   "name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+   "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "version": "2.1.7"
+ },
+ "paths": {
+  "/frontend/antibody-instance-search": {
+   "get": {
+    "summary": "Get Frontend Antibody Instance Search",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 500,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     },
+     {
+      "name": "order_by",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "enum": [
+        "id",
+        "antibody_id"
+       ],
+       "type": "string",
+       "description": "Field used to order returned antibody instances. Use id for antibody instance ID order, or antibody_id for antibody (SAbDab) ID order.",
+       "default": "id",
+       "title": "Order By"
+      },
+      "description": "Field used to order returned antibody instances. Use id for antibody instance ID order, or antibody_id for antibody (SAbDab) ID order."
+     },
+     {
+      "name": "antibody_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 50,
+       "description": "Get instances of the canonical antibody with this ID.",
+       "title": "Antibody Id"
+      },
+      "description": "Get instances of the canonical antibody with this ID."
+     },
+     {
+      "name": "construct_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/ConstructType"
+        },
+        {
+         "const": "NO_CONSTRUCT",
+         "type": "string"
+        }
+       ],
+       "description": "Get antibodies with sequences of this construct type.",
+       "title": "Construct Type"
+      },
+      "description": "Get antibodies with sequences of this construct type."
+     },
+     {
+      "name": "antibody_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/components/schemas/AntibodyType"
+       },
+       "description": "Get antibodies of one or more types. Repeat the query parameter to request multiple values.",
+       "title": "Antibody Type"
+      },
+      "description": "Get antibodies of one or more types. Repeat the query parameter to request multiple values."
+     },
+     {
+      "name": "binds_to_antigen",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 25,
+       "description": "Get antibodies that bind to antigens whose names or IDs contain this string.",
+       "title": "Binds To Antigen"
+      },
+      "description": "Get antibodies that bind to antigens whose names or IDs contain this string."
+     },
+     {
+      "name": "antigen_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/AntigenType"
+        },
+        {
+         "type": "boolean"
+        }
+       ],
+       "description": "Get antibodies that bind to antigens of this type.",
+       "title": "Antigen Type"
+      },
+      "description": "Get antibodies that bind to antigens of this type."
+     },
+     {
+      "name": "light_chain_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/VariableDomainType",
+       "maxLength": 25,
+       "description": "Get antibodies whose light chains are of this type"
+      },
+      "description": "Get antibodies whose light chains are of this type"
+     },
+     {
+      "name": "organism_scientific",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Get antibody instances with source organism scientific names containing this string on either the heavy or light chain.",
+       "title": "Organism Scientific"
+      },
+      "description": "Get antibody instances with source organism scientific names containing this string on either the heavy or light chain."
+     },
+     {
+      "name": "light_chain_contains_seq",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Get antibodies whose light chains containan exact match to this sequence.",
+       "title": "Light Chain Contains Seq"
+      },
+      "description": "Get antibodies whose light chains containan exact match to this sequence."
+     },
+     {
+      "name": "heavy_chain_contains_seq",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Get antibodies whose heavy chains containan exact match to this sequence.",
+       "title": "Heavy Chain Contains Seq"
+      },
+      "description": "Get antibodies whose heavy chains containan exact match to this sequence."
+     },
+     {
+      "name": "pdb_entry",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "maxLength": 12,
+       "description": "Get antibodies which are contained in this specific PDB entry ID.",
+       "title": "Pdb Entry"
+      },
+      "description": "Get antibodies which are contained in this specific PDB entry ID."
+     },
+     {
+      "name": "experimental_method",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/PDBDeterminationMethod",
+       "description": "Get antibody instances whose structures were determined using this method."
+      },
+      "description": "Get antibody instances whose structures were determined using this method."
+     },
+     {
+      "name": "resolution",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "number",
+       "description": "Get antibody instances whose structures were determined at this resolution or better.",
+       "title": "Resolution"
+      },
+      "description": "Get antibody instances whose structures were determined at this resolution or better."
+     },
+     {
+      "name": "rfactor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "number",
+       "description": "Get antibody instances whose structures were determined with this R-factor (cut-off).",
+       "title": "Rfactor"
+      },
+      "description": "Get antibody instances whose structures were determined with this R-factor (cut-off)."
+     },
+     {
+      "name": "deposited_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "description": "Get antibody instances whose structures were deposited in the PDB on or after this date.",
+       "title": "Deposited After"
+      },
+      "description": "Get antibody instances whose structures were deposited in the PDB on or after this date."
+     },
+     {
+      "name": "deposited_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "description": "Get antibody instances whose structures were deposited in the PDB on or before this date.",
+       "title": "Deposited Before"
+      },
+      "description": "Get antibody instances whose structures were deposited in the PDB on or before this date."
+     },
+     {
+      "name": "released_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "description": "Get antibody instances whose structures were released in the PDB on or after this date.",
+       "title": "Released After"
+      },
+      "description": "Get antibody instances whose structures were released in the PDB on or after this date."
+     },
+     {
+      "name": "released_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "description": "Get antibody instances whose structures were released in the PDB on or before this date.",
+       "title": "Released Before"
+      },
+      "description": "Get antibody instances whose structures were released in the PDB on or before this date."
+     },
+     {
+      "name": "residue_at_position",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Get antibody instances whose numbered antibody segments contain this amino acid residue at this position (e.g. H52A).",
+       "title": "Residue At Position"
+      },
+      "description": "Get antibody instances whose numbered antibody segments contain this amino acid residue at this position (e.g. H52A)."
+     },
+     {
+      "name": "cdr_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/CDRType",
+       "description": "CDR to filter by. Use ALL or omit to search all CDRs."
+      },
+      "description": "CDR to filter by. Use ALL or omit to search all CDRs."
+     },
+     {
+      "name": "cdr_length",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "ge": 1,
+       "description": "Get antibody instances with exact CDR length.",
+       "title": "Cdr Length"
+      },
+      "description": "Get antibody instances with exact CDR length."
+     },
+     {
+      "name": "cdr_sequence",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "description": "Get antibody instances with exact CDR sequence.",
+       "title": "Cdr Sequence"
+      },
+      "description": "Get antibody instances with exact CDR sequence."
+     }
+    ]
+   }
+  },
+  "/frontend/pdb/{pdb_id}": {
+   "get": {
+    "summary": "Get Frontend Pdb Detail",
+    "parameters": [
+     {
+      "name": "pdb_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Pdb Id"
+      }
+     }
+    ]
+   }
+  },
+  "/stats/summary": {
+   "get": {
+    "summary": "Get Stats Summary",
+    "parameters": []
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AntibodyType": {
+    "type": "string",
+    "enum": [
+     "FV",
+     "FAB",
+     "FAB+FC",
+     "FV*",
+     "SD-H",
+     "SD-L",
+     "VNAR"
+    ],
+    "title": "AntibodyType",
+    "description": "Antibody type values that go in the TYPE field of the AntibodyEntry.\n\nNOTE:\nAnything more complicated than the simple configurations below is a\n\"construct\", i.e. a RELATION between entities of the types below.\nThis includes:\n    - diabodies and codvs\n    - exotic constructs (see, e.g., zoo here: https://doi.org/10.1080/19420862.2023.2207232)\nIt may, in future, also include:\n    - a *full* antibody (both arms of the Y) \u2014 bispecific or otherwise.\nConstructs are handled by the CHAINSHARING_CONSTRUCT and\nNON_CHAINSHARING_CONSTRUCT fields in the AntibodyEntry."
+   },
+   "ConstructType": {
+    "type": "string",
+    "enum": [
+     "SCFV",
+     "DIABODY",
+     "CODV",
+     "DVD",
+     "SCDB",
+     "FULLAB",
+     "OTHER"
+    ],
+    "title": "ConstructType",
+    "description": "Construct type values for the CHAINSHARING_CONSTRUCT['TYPE'] and\nNON_CHAINSHARING_CONSTRUCT['TYPE'] fields in AntibodyEntry.\n\nUsed when an antibody (VH/VL pair or SD-H or SD-L) shares physical chain(s)\nwith other antibodies OR when it's part of a full-Ab.\nWhen the antibody is not in such a construct, the construct key is set to\nFalse (no enum member)."
+   },
+   "CDRType": {
+    "type": "string",
+    "enum": [
+     "ALL",
+     "H1",
+     "H2",
+     "H3",
+     "L1",
+     "L2",
+     "L3"
+    ],
+    "title": "CDRType"
+   },
+   "StatsSummary": {
+    "properties": {
+     "antibody_instances": {
+      "type": "integer",
+      "title": "Antibody Instances"
+     },
+     "PDB_entries": {
+      "type": "integer",
+      "title": "Pdb Entries"
+     },
+     "SAbDab2_entries": {
+      "type": "integer",
+      "title": "Sabdab2 Entries"
+     },
+     "with_antigen": {
+      "type": "integer",
+      "title": "With Antigen"
+     },
+     "last_update": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Update"
+     },
+     "experimental_methods": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Experimental Methods"
+     }
+    },
+    "type": "object",
+    "required": [
+     "antibody_instances",
+     "PDB_entries",
+     "SAbDab2_entries",
+     "with_antigen",
+     "last_update",
+     "experimental_methods"
+    ],
+    "title": "StatsSummary"
+   },
+   "FrontendAntibodyInstanceSearchPage": {
+    "properties": {
+     "results": {
+      "items": {
+       "$ref": "#/components/schemas/AntibodyInstancePublicWithRelationships"
+      },
+      "type": "array",
+      "title": "Results"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     },
+     "antigen_instances": {
+      "items": {
+       "$ref": "#/components/schemas/AntigenInstancePublicWithRelationships"
+      },
+      "type": "array",
+      "title": "Antigen Instances"
+     },
+     "canonical_instance_counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Canonical Instance Counts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "results",
+     "total",
+     "limit",
+     "offset",
+     "antigen_instances",
+     "canonical_instance_counts"
+    ],
+    "title": "FrontendAntibodyInstanceSearchPage"
+   }
+  }
+ }
+}

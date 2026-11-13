@@ -35,6 +35,7 @@ Expect = Literal["json", "text", "tsv", "bytes", "any"]
 MAX_BODY_BYTES = 25 * 1024 * 1024
 _RETRY_STATUSES = frozenset({408, 429, 500, 502, 503, 504})
 _HTML_STARTS = ("<!doctype html", "<html")
+_SENSITIVE_HEADERS = frozenset({"set-cookie", "cookie", "authorization", "proxy-authorization"})
 
 
 @dataclass(frozen=True)
@@ -185,7 +186,7 @@ class HttpClient:
                     url=meta["url"],
                     content_type=meta["content_type"],
                     content=content,
-                    headers={},
+                    headers=meta.get("headers", {}),
                     cached=True,
                 )
         if self.settings.offline:
@@ -247,7 +248,15 @@ class HttpClient:
                 self.cache.put(
                     cache_key,
                     resp.content,
-                    {"status": resp.status, "url": resp.url, "content_type": resp.content_type},
+                    {
+                        "status": resp.status,
+                        "url": resp.url,
+                        "content_type": resp.content_type,
+                        # Keep headers (for example a database release number) but never cookies.
+                        "headers": {
+                            k: v for k, v in resp.headers.items() if k not in _SENSITIVE_HEADERS
+                        },
+                    },
                     ttl or 0,
                 )
             return resp
@@ -283,29 +292,40 @@ class HttpClient:
         if 200 <= s < 300:
             return
         snippet = sanitize_message(resp.text, 300)
+        # Not shown to the model; lets a connector read the upstream status and body.
+        details = {"status": s, "body": sanitize_message(resp.text, 2000)}
         if s == 404:
-            raise ImmunoError(ErrorCode.NOT_FOUND, f"{source}: not found (404)")
+            raise ImmunoError(ErrorCode.NOT_FOUND, f"{source}: not found (404)", details=details)
         if s in (400, 422):
-            raise ImmunoError(ErrorCode.INVALID_INPUT, f"{source} rejected the request: {snippet}")
+            raise ImmunoError(
+                ErrorCode.INVALID_INPUT,
+                f"{source} rejected the request: {snippet}",
+                details=details,
+            )
         if s == 401:
             raise ImmunoError(
                 ErrorCode.NEEDS_KEY,
                 f"{source}: authentication failed (401)",
                 hint="Check that the API key or token is set and still valid.",
+                details=details,
             )
         if s == 403:
             raise ImmunoError(
                 ErrorCode.UPSTREAM_ERROR,
                 f"{source}: forbidden (403). The resource may be gated or the site blocks automation.",
                 retryable=False,
+                details=details,
             )
         if s == 429:
             raise ImmunoError(
                 ErrorCode.RATE_LIMITED,
                 f"{source}: rate limited (429)"
                 + (f", retry after {retry_after:.0f}s" if retry_after else ""),
+                details=details,
             )
-        raise ImmunoError(ErrorCode.UPSTREAM_ERROR, f"{source}: HTTP {s}: {snippet}")
+        raise ImmunoError(
+            ErrorCode.UPSTREAM_ERROR, f"{source}: HTTP {s}: {snippet}", details=details
+        )
 
     @staticmethod
     def _check_body(
