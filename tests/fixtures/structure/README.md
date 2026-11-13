@@ -23,6 +23,12 @@ so it does not ship the files. Recreate them for your own non-commercial researc
 `python scripts/fetch_reference_fixtures.py`; every download is checked against the SHA-256
 below. The tests that need them skip themselves when the directory is missing.
 
+Also in that folder, not committed: `fold_aurka_0_tpx2_0_model_0_15_15.txt` and
+`fold_aurka_0_tpx2_0_model_0_05_10.txt`, generated on 2026-11-14 by running the authors'
+`ipsae.py` (commit 6174cf9) on the same example with arguments `15 15` and `5 10`. They are
+not downloadable, so recreate them by running that script. `immuno-mcp`'s ipSAE matched them
+exactly (ipSAE, n0res, residue counts, both directions and the max).
+
 From https://github.com/DunbrackLab/IPSAE (commit 6174cf9e71cb1bd660cc805856a18c4871a6dec3,
 `Example/`), MIT licence for the code (copied as `LICENSE.IPSAE`). The model files are
 AlphaFold Server output: the mmCIF header states that use is subject to

@@ -162,9 +162,9 @@ def aurka() -> dict:
     return {"cif": cif, "json": js, "summary": summary, "pae": pae, "ids": ids}
 
 
-def reference_rows() -> dict[tuple[str, str, str], list[str]]:
+def reference_rows(stem: str = "10_10") -> dict[tuple[str, str, str], list[str]]:
     rows = {}
-    for line in (AURKA / "fold_aurka_0_tpx2_0_model_0_10_10.txt").read_text().splitlines():
+    for line in (AURKA / f"fold_aurka_0_tpx2_0_model_0_{stem}.txt").read_text().splitlines():
         parts = line.split()
         if len(parts) > 20 and parts[0] in ("A", "B"):
             rows[(parts[0], parts[1], parts[4])] = parts
@@ -187,6 +187,28 @@ def test_reproduces_the_reference_output_at_cutoff_10(aurka):
     for row, mine, val in (
         (ref[("A", "B", "asym")], ab, r["ipsae_a_to_b"]),
         (ref[("B", "A", "asym")], ba, r["ipsae_b_to_a"]),
+    ):
+        assert val == pytest.approx(float(row[5]), abs=1e-6)
+        assert mine["n0res"] == int(row[13])
+        assert mine["d0res"] == pytest.approx(float(row[16]), abs=0.006)
+        assert mine["aligned_residues_with_good_pae"] == int(row[19])
+        assert mine["scored_residues_with_good_pae"] == int(row[20])
+    assert r["ipsae"] == pytest.approx(float(ref[("A", "B", "max")][5]), abs=1e-6)
+
+
+@pytest.mark.parametrize(("cutoff", "stem"), [(15, "15_15"), (5, "05_10")])
+def test_reproduces_the_reference_output_at_other_cutoffs(aurka, cutoff, stem):
+    """Reference summaries generated on 2026-11-14 by running the authors' ipsae.py (commit 6174cf9)
+    on the same AlphaFold 3 example with `<pae> <dist>` = `15 15` and `5 10`. Not committed (see the
+    fixtures README); the test skips when they are absent."""
+    path = AURKA / f"fold_aurka_0_tpx2_0_model_0_{stem}.txt"
+    if not path.exists():
+        pytest.skip("reference output not generated; see tests/fixtures/structure/README.md")
+    ref = reference_rows(stem)
+    r = sc.compute_ipsae(aurka["pae"], aurka["ids"], ["A"], ["B"], pae_cutoff=cutoff)
+    for row, mine, val in (
+        (ref[("A", "B", "asym")], r["directional"]["a_to_b"], r["ipsae_a_to_b"]),
+        (ref[("B", "A", "asym")], r["directional"]["b_to_a"], r["ipsae_b_to_a"]),
     ):
         assert val == pytest.approx(float(row[5]), abs=1e-6)
         assert mine["n0res"] == int(row[13])
