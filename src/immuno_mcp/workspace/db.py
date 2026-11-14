@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS artifacts (
     path TEXT NOT NULL,
     bytes INTEGER NOT NULL,
     mime TEXT,
-    kind TEXT,                     -- pdb | mmcif | fasta | json | csv | other
+    kind TEXT,                     -- pdb | mmcif | fasta | json | csv | npz | other
     source TEXT,
     job_id TEXT,
     created_at TEXT NOT NULL

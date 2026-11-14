@@ -131,6 +131,8 @@ def register(reg: ToolRegistrar) -> None:
 Rules:
 * Profiles: `readonly` = public reads and pure local analysis, no state written. `lab` = also writes to the
   workspace (candidates, scores, downloaded files). `compute` = also spends money (`spends_money=True`).
+* No tool accepts a filesystem path. Files produced outside the server enter the workspace only
+  through `import_artifact`, by name, from the inbox (`<IMMUNOMCP_HOME>/inbox`).
 * Raise `ImmunoError(code, message, hint=...)`. Never return `{"error": ...}` as a success.
 * Argument errors: validate and raise `INVALID_INPUT` with a hint listing the valid values.
 * Every result carries `provenance`. List third-party prose paths in `untrusted=[...]`.
@@ -218,6 +220,7 @@ literature (B2): `search_literature`, `get_passages`;  datasets (B2): `list_data
 sequence (C1): `number_sequence`, `annotate_cdrs`, `scan_liabilities`, `profile_developability`, `cluster_sequences`, `parse_airr`
 structure_local (C2): `extract_chains`, `interface_contacts`, `map_epitope_paratope`;  scores (C2): `compute_ipsae`
 ledger (D): `add_candidate`, `list_candidates`, `ingest_scores`, `rank_candidates`, `export_score_table`, `export_run_manifest`
+workspace (lead): `import_artifact`
 jobs (D): `estimate_cost`, `submit_prediction`, `submit_design`, `submit_embedding`, `get_job`, `list_jobs`, `cancel_job`
 
 ## Report format (end of your task)

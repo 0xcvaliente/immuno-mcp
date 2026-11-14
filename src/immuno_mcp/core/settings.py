@@ -84,6 +84,11 @@ class Settings:
     def artifacts_dir(self) -> Path:
         return self.home / "workspace" / "artifacts"
 
+    @property
+    def inbox_dir(self) -> Path:
+        """Where files made outside the server are put for import_artifact (names only)."""
+        return self.home / "inbox"
+
     def secret_values(self) -> list[str]:
         """Every configured secret, so log filters can redact them."""
         return [s for s in (self.japanfold_api_key, self.hf_token, self.ncbi_api_key) if s]

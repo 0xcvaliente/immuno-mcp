@@ -81,6 +81,20 @@ WORKFLOWS: dict[str, dict[str, Any]] = {
             ("query_binding_data", "measured binding changes on mutation (SKEMPI 2.0)"),
         ],
     },
+    "external_results": {
+        "title": "Analyse results produced outside immuno-mcp (a CLI download, a notebook, a "
+        "lab export)",
+        "steps": [
+            (
+                "import_artifact",
+                "list the inbox (no arguments), then import the files by name",
+            ),
+            ("extract_chains", "chains and sequences of the imported model"),
+            ("interface_contacts", "residue contacts between two chain groups"),
+            ("map_epitope_paratope", "or: epitope and paratope residues with CDR labels"),
+            ("compute_ipsae", "interface score from the imported PAE file and the model"),
+        ],
+    },
 }
 
 _ID_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
