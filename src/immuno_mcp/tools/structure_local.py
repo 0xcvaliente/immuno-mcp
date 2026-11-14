@@ -214,6 +214,11 @@ async def _number_chains(
                         region_of[k] = str(name)
                 else:
                     warnings.append(f"Chain {chain}: region {name} has labels outside the domain.")
+            if scheme != "imgt":
+                warnings.append(
+                    f"Chain {chain}: positions are {scheme} labels, but regions are the IMGT "
+                    "definition."
+                )
             maps[chain] = {
                 offset + k: (lab, region_of.get(k)) for k, (lab, _) in enumerate(positions)
             }
@@ -344,8 +349,8 @@ def register(reg: ToolRegistrar) -> None:
         Uses model 1, the highest-occupancy altloc, and polymer residues only (water, ions,
         ligands and glycans left out). Buried surface area is SASA(A)+SASA(B)-SASA(A+B) in Å²
         (Shrake-Rupley, probe 1.4 Å). Residues use author chain ids and numbering with
-        insertion codes. Returns `scores` rows (interface_contacts, interface_buried_sasa) that
-        ingest_scores can record; this tool writes nothing. These are geometric facts of the
+        insertion codes. Returns `scores` rows (interface_contacts, interface_buried_sasa) in the
+        score-ledger format; this tool writes nothing. These are geometric facts of the
         given model, not binding strength. For antibody-antigen interfaces with CDR labels,
         use map_epitope_paratope.
         """
@@ -368,7 +373,6 @@ def register(reg: ToolRegistrar) -> None:
                 ],
                 warnings=warnings,
                 next_steps=[
-                    "ingest_scores(candidate, scores) to record these numbers in the ledger",
                     "map_epitope_paratope(antibody_chains, antigen_chains, scheme='imgt') "
                     "for CDR-labelled paratope and epitope",
                 ],
@@ -456,7 +460,6 @@ def register(reg: ToolRegistrar) -> None:
                 ],
                 warnings=warnings,
                 next_steps=[
-                    "ingest_scores(candidate, scores) to record contacts and buried area",
                     "annotate_cdrs(sequence, scheme) for full CDR definitions of each chain",
                 ],
             ),
